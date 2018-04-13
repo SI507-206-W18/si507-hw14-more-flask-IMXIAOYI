@@ -8,10 +8,21 @@ def index():
     ## print the guestbook
     return render_template("index.html", entries=model.get_entries())
 
+@app.route("/admin")
+def admin():
+    ## print the guestbook
+    return render_template("admin.html", entries=model.get_entries())
+
 @app.route("/add")
 def addentry():
     ## add a guestbook entry
     return render_template("addentry.html")
+
+@app.route("/delete", methods=["POST"])
+def delete():
+  the_id = request.form["id"]
+  model.delete_entry(the_id)
+  return redirect('/admin')
 
 @app.route("/postentry", methods=["POST"])
 def postentry():
